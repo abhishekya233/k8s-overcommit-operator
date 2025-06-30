@@ -24,7 +24,7 @@ SPDX-License-Identifier: CC-BY-4.0
 [![Helm](https://img.shields.io/badge/Helm-0F1689?style=flat&logo=helm&logoColor=white)](https://helm.sh/)
 [![REUSE Compliance](https://img.shields.io/badge/REUSE-compliant-green)](https://reuse.software/)
 
-[![GitHub Issues](https://img.shields.io/github/issues/InditexTech/k8s-overcommit-operator)]
+[![GitHub Issues](https://img.shields.io/github/issues/InditexTech/k8s-overcommit-operator)](https://github.com/InditexTech/k8s-overcommit-operator/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/InditexTech/k8s-overcommit-operator)](https://github.com/InditexTech/k8s-overcommit-operator/pulls)
 [![GitHub Stars](https://img.shields.io/github/stars/InditexTech/k8s-overcommit-operator?style=social)](https://github.com/InditexTech/k8s-overcommit-operator/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/InditexTech/k8s-overcommit-operator?style=social)](https://github.com/InditexTech/k8s-overcommit-operator/network/members)
