@@ -1,0 +1,29 @@
+# SPDX-FileCopyrightText: 2025 2025 INDUSTRIA DE DISEÑO TEXTIL S.A. (INDITEX S.A.)
+# SPDX-FileContributor: enriqueavi@inditex.com
+#
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: test-5
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-5
+  namespace: test-5
+  labels:
+    inditex.com/overcommit-class: 'test'
+spec:
+  containers:
+    - name: busybox-container-1
+      image: busybox
+      command: ["sh", "-c", "echo 'Hello from container 1'; sleep 3600"]
+      resources:
+        requests:
+          memory: "100Mi"
+          cpu: "250m"
+        limits:
+          memory: "4Gi"
+          cpu: "500m"

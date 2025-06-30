@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2025 2025 INDUSTRIA DE DISEÑO TEXTIL S.A. (INDITEX S.A.)
+# SPDX-FileContributor: enriqueavi@inditex.com
+#
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: kuttl.dev/v1beta1
+kind: TestSuite
+testDirs:
+  - .
+timeout: 30
+suppress:
+  - events
+reportName: e2e
+reportFormat: JSON
+parallel: 1

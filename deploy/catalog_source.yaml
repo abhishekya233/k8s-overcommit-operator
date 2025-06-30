@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: k8s-overcommit-operator-catalog
+  namespace: olm
+spec:
+  sourceType: grpc
+  image: ghcr.io/inditextech/k8s-overcommit-operator-catalog:1.1.4
+  displayName: K8s Overcommit Operator Catalog
+  publisher: Inditex Tech

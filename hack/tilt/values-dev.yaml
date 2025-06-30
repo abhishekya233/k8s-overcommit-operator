@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: 2025 2025 INDUSTRIA DE DISEÑO TEXTIL S.A. (INDITEX S.A.)
+# SPDX-FileContributor: enriqueavi@inditex.com
+#
+# SPDX-License-Identifier: Apache-2.0
+
+---
+createClasses: true
+createnamespace: false
+namespace: k8s-overcommit
+
+deployment:
+  image:
+    registry: localhost:5000
+    image: controller-manager
+    tag: dev

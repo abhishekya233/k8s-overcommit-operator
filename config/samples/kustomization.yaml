@@ -1,0 +1,5 @@
+## Append samples of your project ##
+resources:
+- overcommit_v1_overcommitclass.yaml
+- overcommit_v1_overcommit.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples

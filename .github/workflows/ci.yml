@@ -1,0 +1,43 @@
+name: ⚒️ Go e2e tests for the webhook
+on:
+  pull_request:
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    name: E2E tests 🔃
+    steps:
+    - name: Checkout 🧲
+      uses: actions/checkout@v4
+
+    - name: Restore go build cache ⏬
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/go-build
+        key: ${{ runner.os }}-go-build-v1
+
+    - name: Setup Go ⬇️
+      uses: actions/setup-go@v3
+      with:
+        go-version: 1.24.2
+
+    - name: Install kubectl, helm, kind and kuttl ⬇️
+      env:
+        KUTTL_VERSION: '0.20.0'
+        KUTTL_PLUGIN_FILENAME: 'kubectl-kuttl_0.20.0_linux_x86_64'
+      run: bash hack/install-dependencies.sh
+
+    - name: Run kind ⚙️
+      run: kind create cluster --name kuttl-cluster
+
+    - name: Mount the image in the Kind cluster ⚙️
+      run: |
+        bash hack/ci-mount-image.sh
+
+    - name: Run the tests 🔎
+      run: |
+        echo "Running the tests"
+        kubectl kuttl test test/e2e/ --start-kind=false
+
+    - name: Clean up Kind cluster ☠️
+      if: always()
+      run: kind delete cluster --name kuttl-cluster

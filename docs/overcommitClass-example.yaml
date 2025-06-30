@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2025 2025 INDUSTRIA DE DISEÑO TEXTIL S.A. (INDITEX S.A.)
+# SPDX-FileContributor: enriqueavi@inditex.com
+#
+# SPDX-License-Identifier: CC-BY-4.0
+
+apiVersion: overcommit.inditex.dev/v1alphav1
+kind: OvercommitClass
+metadata:
+  name: my-class
+spec:
+  cpuOvercommit: 0.1
+  memoryOvercommit: 0.8
+  isDefault: true
+  labels:
+    example: "label"
+  annotations:
+    example: "annotation"

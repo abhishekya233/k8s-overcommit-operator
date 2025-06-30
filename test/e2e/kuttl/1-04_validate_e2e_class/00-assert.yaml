@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: 2025 2025 INDUSTRIA DE DISEÑO TEXTIL S.A. (INDITEX S.A.)
+# SPDX-FileContributor: enriqueavi@inditex.com
+#
+# SPDX-License-Identifier: Apache-2.0
+
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: test4-overcommit-webhook
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test4-overcommit-webhook
+  namespace: k8s-overcommit
+spec:
+  template:
+    metadata:
+      labels:
+        example: "label"
+      annotations:
+        example: "annotation"

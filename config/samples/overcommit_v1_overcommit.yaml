@@ -1,0 +1,9 @@
+apiVersion: overcommit.inditex.dev/v1alphav1
+kind: Overcommit
+metadata:
+  labels:
+    app.kubernetes.io/name: k8s-overcommit
+    app.kubernetes.io/managed-by: kustomize
+  name: overcommit-sample
+spec:
+  # TODO(user): Add fields here

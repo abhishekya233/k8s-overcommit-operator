@@ -1,0 +1,27 @@
+# permissions for end users to edit overcommitclasses.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: k8s-overcommit
+    app.kubernetes.io/managed-by: kustomize
+  name: overcommitclass-editor-role
+rules:
+- apiGroups:
+  - overcommit.inditex.dev
+  resources:
+  - overcommitclasses
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - overcommit.inditex.dev
+  resources:
+  - overcommitclasses/status
+  verbs:
+  - get
