@@ -9,8 +9,6 @@ SPDX-License-Identifier: CC-BY-4.0
 
 # 🚀 k8s-overcommit Operator
 
-<img src='./docs/images/logo.png' width='200' height='250' alt="k8s-overcommit operator logo">
-
 **Intelligent resource overcommit management for Kubernetes clusters**
 
 [![GitHub License](https://img.shields.io/github/license/InditexTech/k8s-overcommit-operator)](LICENSE)
