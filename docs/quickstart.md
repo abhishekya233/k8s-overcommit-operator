@@ -10,7 +10,6 @@ SPDX-License-Identifier: CC-BY-4.0
 > [!IMPORTANT]
 > **Prerequisites**: Ensure **cert-manager** is installed in your cluster before deploying the operator.
 
-
 Choose your preferred installation method:
 
 ## 📦 Installation Methods
@@ -70,7 +69,7 @@ kubectl apply -f https://raw.githubusercontent.com/InditexTech/k8s-overcommit-op
 You can create your own subscription or use the default [`subscription.yaml`](../deploy/subscription.yaml). Below is an example:
 
 ```yaml
-apiVersion: operators.coreos.com/v1alphav1
+apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: k8s-overcommit-operator
